@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.xm.dao.StudentDao">
+
+	<!-- 获取用户信息列表 -->
+	<select id="getAllStudents" resultType="com.xm.bean.Student">
+		select sid,sname,gender,institute,inschool_date,
+			dorm_id,(select dorm_capacity from dorm where dorm_id=student.dorm_id) dorm_capacity from student order by sid asc
+	</select>
+
+	<select id="getKeywordStudents" resultType="com.xm.bean.Student">
+		select sid,sname,gender,institute,inschool_date,
+			dorm_id,(select dorm_capacity from dorm where dorm_id=student.dorm_id) dorm_capacity from student where sname like concat('%',#{keyword},'%')
+	</select>
+	
+	<select id="getStudentBySid" resultType="com.xm.bean.Student">
+		select sid,sname,gender,institute,inschool_date,
+			dorm_id,(select dorm_capacity from dorm where dorm_id=student.dorm_id) dorm_capacity from student where sid=#{sid}
+	</select>
+	
+	<update id="updateOneStudentInfo">
+		update student set dorm_id=#{newDormId} where sid=#{sid}
+	</update>
+	
+	<select id="getNextSid" resultType="java.lang.Integer">
+		select max(sid)+1 from student
+	</select>
+	
+	<insert id="insertStudent">
+		insert into student values((select max(sid)+1 from student),#{name},#{gender},#{institute},#{inschool_date},#{dorm_id})
+	</insert>
+	
+</mapper>

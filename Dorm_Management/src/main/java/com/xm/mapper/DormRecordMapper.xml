@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.xm.dao.DormRecordDao">
+	<update id="updateDormRecord">
+		update dorm_record set out_date=#{currentDate} where sid=#{sid} and out_date='至今'
+	</update>
+	
+	<select id="getDormRecord" resultType="com.xm.bean.DormRecord">
+		select sid,dorm_id,(select dorm_capacity from dorm where dorm_id=dorm_record.dorm_id),in_date,out_date from dorm_record 
+		where sid=#{sid} order by in_date asc
+	</select>
+	
+	<insert id="insertDormRecord">
+		insert into dorm_record values(#{nextSid},#{dorm_id},#{currentDate},'至今')
+	</insert>
+	
+</mapper>

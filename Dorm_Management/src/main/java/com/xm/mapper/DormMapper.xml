@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.xm.dao.DormDao">
+
+	<update id="updateOldDorm">
+		update dorm set dorm_capacity=dorm_capacity-1 where dorm_id=#{oldDormId}
+	</update>
+	
+	<update id="updateNewDorm">
+		update dorm set dorm_capacity=dorm_capacity+1 where dorm_id=#{newDormId}
+	</update>
+	
+	<select id="getDormIds" resultType="java.lang.Integer">
+		select dorm_id from dorm
+	</select>
+	
+	<select id="getDormById" resultType="com.xm.bean.Dorm">
+		select * from dorm where dorm_id=#{newDormId}
+	</select>
+	
+	<insert id="addNewDorm">
+		insert into dorm values(#{newDormId},0)
+	</insert>
+	
+	<update id="updateDormCapacity">
+		update dorm set dorm_capacity=dorm_capacity+1 where dorm_id=#{dorm_id}
+	</update>
+</mapper>
